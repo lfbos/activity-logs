@@ -9,7 +9,7 @@ class Post(models.Model):
     image_src = models.ImageField(verbose_name="Post image")
 
 
-class ActivtyLog(models.Model):
+class ActivityLog(models.Model):
     """Activity logs of actions over Posts."""
 
     class InteractionType(models.TextChoices):
