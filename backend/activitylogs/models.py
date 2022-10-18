@@ -37,3 +37,6 @@ class ActivityLog(models.Model):
         verbose_name="Interaction type"
     )
     timestamp = models.DateTimeField(verbose_name="Timestamp", auto_now_add=True)
+
+    class Meta:
+        ordering = ("-timestamp",)
