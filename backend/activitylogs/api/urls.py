@@ -9,7 +9,7 @@ if settings.DEBUG:
 else:
     router = routers.SimpleRouter()
 
-router.register(r"posts", PostViewSet)
+router.register(r"posts", PostViewSet, basename="posts")
 
 urlpatterns = [
     path("", include(router.urls)),

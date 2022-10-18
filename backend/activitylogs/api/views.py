@@ -7,12 +7,21 @@ from activitylogs.models import Post, ActivityLog
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
     serializer_class = PostSerializer
-    queryset = Post.objects.annotate(
-        likes=Count(
-            "actions",
-            distinct=True,
-            filter=Q(actions__interaction_type=ActivityLog.InteractionType.LIKE),
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return Post.objects.annotate(
+            likes=Count(
+                "actions",
+                distinct=True,
+                filter=Q(actions__interaction_type=ActivityLog.InteractionType.LIKE),
+            ),
+            current_user_likes=Count(
+                "actions",
+                distinct=True,
+                filter=Q(actions__interaction_type=ActivityLog.InteractionType.LIKE) &
+                       Q(actions__user=user),
+            )
         )
-    )
