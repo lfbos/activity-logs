@@ -1,7 +1,16 @@
-from django.urls import path
+from django.conf import settings
+from django.urls import path, include
+from rest_framework import routers
 
-from activitylogs.api.views import PostAPIView
+from activitylogs.api.views import PostViewSet
+
+if settings.DEBUG:
+    router = routers.DefaultRouter()
+else:
+    router = routers.SimpleRouter()
+
+router.register(r"posts", PostViewSet)
 
 urlpatterns = [
-    path("posts/", PostAPIView.as_view()),
+    path("", include(router.urls)),
 ]
