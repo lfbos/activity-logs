@@ -1,18 +1,17 @@
 import { Routes, Route} from "react-router-dom";
 import Home from "./pages/home";
-import About from "./pages/about";
-import Detail from "./pages/detail";
+import Login from "./pages/login";
+import SignUp from "./pages/signup";
 
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Welcome to React Router!</h1>
+    <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="detail/:detailId" element={<Detail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </div>
   );
