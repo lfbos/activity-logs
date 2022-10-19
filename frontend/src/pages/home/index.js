@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { axiosInstance, urls } from "../../apiUtils";
 
 function Home() {
+    axiosInstance.get(urls.posts).then((response) => console.log(response));
     return (
       <>
         <main>

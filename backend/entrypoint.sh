@@ -1,6 +1,6 @@
 #!/bin/sh
 
-until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -W $POSTGRES_PASSWORD -U $POSTGRES_USER -c '\q'; do
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -c '\q'; do
   echo "Waiting for postgres server"
   sleep 1
 done

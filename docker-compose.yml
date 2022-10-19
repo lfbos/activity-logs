@@ -3,7 +3,8 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - /var/run/postgres/postgres.sock:/var/run/postgres/postgres.sock
+      - db-volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -19,7 +20,7 @@ services:
       - DEBUG=True
       - SECRET_KEY=u1=7b7g4)_fux6wi4mgg3r0ag9@sc_=
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
-      - ALLOWED_HOSTS=frontend:3000
+      - ALLOWED_HOSTS=*
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -33,3 +34,6 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app/frontend
+
+volumes:
+  db-volume:
