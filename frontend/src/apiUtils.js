@@ -35,3 +35,8 @@ export const registerView = (postId) => {
     const viewUrl = urls.view.replace("{postId}", postId);
     return axiosInstance.post(viewUrl, null, {headers: {"Authorization": `Bearer ${accessToken}`}});
 }
+
+export const getStats = () => {
+    const accessToken = localStorage.getItem("__ACCESS_TOKEN");
+    return axiosInstance.get(urls.stats, {headers: {"Authorization": `Bearer ${accessToken}`}});
+}

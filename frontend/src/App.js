@@ -4,6 +4,7 @@ import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import PageNotFound from "./pages/notfound";
 import PostPage from "./pages/post";
+import Stats from "./pages/stats";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 import './App.css';
@@ -20,6 +21,11 @@ function App() {
         <Route path="/:postId" element={
           <ProtectedRoute>
             <PostPage/>
+          </ProtectedRoute>  
+        }/>
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Stats/>
           </ProtectedRoute>  
         }/>
         <Route path="/login" element={<Login />}/>

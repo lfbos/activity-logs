@@ -90,7 +90,7 @@ class PostViewSet(viewsets.ModelViewSet):
                 filter=Q(actions__interaction_type=interaction_type)
             )
         ).order_by('-total')[:top]
-        return posts.values('title', 'total')
+        return posts.values('id', 'title', 'total')
 
 
 class RegisterAPIView(GenericAPIView):
