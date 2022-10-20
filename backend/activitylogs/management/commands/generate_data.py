@@ -46,7 +46,7 @@ class Command(BaseCommand):
             # TODO: add random images
             posts.append(Post(
                 title=faker.sentence(),
-                description=faker.paragraph(nb_sentences=5))
+                description=faker.paragraph(nb_sentences=5)))
         post_instances = Post.objects.bulk_create(posts, batch_size=100)
         self.stdout.write(self.style.SUCCESS(f"Total {len(post_instances)} posts generated"))
 
