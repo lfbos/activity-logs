@@ -2,10 +2,11 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Q
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
-from activitylogs.api.serializers import PostSerializer
+from activitylogs.api.serializers import PostSerializer, RegisterSerializer
 from activitylogs.models import Post, ActivityLog
 
 
@@ -54,3 +55,15 @@ class PostViewSet(viewsets.ModelViewSet):
             )
         ).order_by('-total')[:top]
         return posts.values('title', 'total')
+
+
+class RegisterAPIView(GenericAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = (AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
+        return Response({"message": f"New user {user.username} registered successfully"})

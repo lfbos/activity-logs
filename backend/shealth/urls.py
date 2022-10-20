@@ -4,12 +4,15 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
+from activitylogs.api.views import RegisterAPIView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('activity-logs/api/', include("activitylogs.api.urls"))
+    path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path("api/register/", RegisterAPIView.as_view()),
+    path('api/activity-logs/', include("activitylogs.api.urls"))
 ]
 
 if settings.DEBUG:
