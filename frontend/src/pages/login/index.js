@@ -1,7 +1,8 @@
+import axios from "axios";
 import React, { Component } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { Button, Form, Grid, Header, Message, Segment, Icon } from "semantic-ui-react";
-import { axiosInstance, urls } from "../../apiUtils";
+import { urls } from "../../apiUtils";
 
 class Login extends Component {
   state = {
@@ -26,15 +27,18 @@ class Login extends Component {
     }
 
     this.setState({ loading: true });
-    axiosInstance.post(urls.login, { username, password })
+    axios.post(urls.login, { username, password })
       .then(({ data }) => {
         localStorage.setItem("__ACCESS_TOKEN", data.access);
-        localStorage.setItem("__REFRESH_TOKEN", data.refresh);
+        localStorage.setItem("__USERNAME", username);
         this.setState({ shouldRedirect: true });
       })
       .catch((error) => {
-        this.setState({ error: "Unexpected error, try later..." });
-        console.log(error.response.message);
+        let errorMsg = "Unexpected error, try later...";
+        if (error.response.hasOwnProperty("data") && error.response.data.hasOwnProperty("detail")) {
+          errorMsg = error.response.data.detail;
+        }
+        this.setState({error: errorMsg});
       })
       .finally(() => this.setState({ loading: false }));
   }

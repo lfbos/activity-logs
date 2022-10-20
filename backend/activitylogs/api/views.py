@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Q
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, get_object_or_404
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
@@ -13,6 +14,7 @@ from activitylogs.models import Post, ActivityLog
 class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticated,)
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         user = self.request.user
@@ -42,6 +44,40 @@ class PostViewSet(viewsets.ModelViewSet):
             "top_most_liked": self._top_posts(ActivityLog.InteractionType.LIKE)
         }
         return Response(data)
+
+    @action(
+        detail=True,
+        permission_classes=(IsAuthenticated,),
+        methods=("post",)
+    )
+    def like(self, request, pk=None):
+        post = get_object_or_404(Post, pk=pk)
+        user = request.user
+        if not post.actions.filter(
+                user=user, interaction_type=ActivityLog.InteractionType.LIKE).exists():
+            ActivityLog.objects.create(
+                user=user,
+                post=post,
+                interaction_type=ActivityLog.InteractionType.LIKE
+            )
+
+        return Response()
+
+    @action(
+        detail=True,
+        permission_classes=(IsAuthenticated,),
+        methods=("post",)
+    )
+    def view(self, request, pk=None):
+        post = get_object_or_404(Post, pk=pk)
+        user = request.user
+        ActivityLog.objects.create(
+            user=user,
+            post=post,
+            interaction_type=ActivityLog.InteractionType.VIEW
+        )
+
+        return Response()
 
     def _registered_users(self):
         return User.objects.count()
