@@ -7,4 +7,7 @@
 2. Run the frontend and the backend using `docker compose up -d`
 3. You also can generate fake data using `docker compose exec backend python manage.py generate_data`
 that command will generate 1.000.000 logs, 200 posts and 1000 users.
-4. To play with the app you can access to this url `http://localhost:3000`.  
+4. To play with the app you can access to this url `http://localhost:3000`.
+
+### API Doc
+To see more details about the endpoints you can saccess using this url `http://localhost:8000/api/doc/` to see more details about it.  
