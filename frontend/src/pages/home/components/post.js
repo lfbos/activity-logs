@@ -35,7 +35,7 @@ function Post(props) {
       <Image src={imageSrc} wrapped ui={false} />
       <Card.Content>
         <Card.Header>
-          <Link to={`/posts/${postId}`}>{title}</Link>
+          <Link to={`/${postId}`}>{title}</Link>
         </Card.Header>
       </Card.Content>
       <Card.Content extra>

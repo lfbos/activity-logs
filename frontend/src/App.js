@@ -3,9 +3,11 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import PageNotFound from "./pages/notfound";
+import PostPage from "./pages/post";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 import './App.css';
-import { ProtectedRoute } from "./ProtectedRoute";
+
 
 function App() {
   return (
@@ -15,6 +17,11 @@ function App() {
           <ProtectedRoute>
             <Home/>
           </ProtectedRoute>} />
+        <Route path="/:postId" element={
+          <ProtectedRoute>
+            <PostPage/>
+          </ProtectedRoute>  
+        }/>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<PageNotFound />} />
